@@ -28,7 +28,7 @@ int compare(const void* left, const void* right)
 int addNew(struct charInfo* list, int spot, int depth, int* byte)
 {
 	// change int to char
-	char temp[5];
+	char temp[4];
 
 	for(int x = 0; x < depth + 1; ++x) 
 	{
@@ -48,6 +48,7 @@ int addNew(struct charInfo* list, int spot, int depth, int* byte)
 			{
 				list[spot].character[i] = temp[i];
 			}	
+			list[spot].character[4] = '\0';
 			return 0;
 		}
 	
@@ -75,7 +76,7 @@ int main(int argc, char** argv)
 {
 	int spot = 0;
 	struct charInfo list[99999];
-	int byte[5];
+	int byte[4];
 	int depth;
 	int success;
 		

@@ -25,8 +25,14 @@ int compare(const void* left, const void* right)
 	}
 }
 
-int addNew(struct charInfo* list, int spot, int depth, int* byte)
+int addNew(struct charInfo* list, int spot, int depth, int* byte, int* cap)
 {
+	if(spot > *cap) 
+	{
+		list = realloc(list, sizeof(list) * 2);
+		*cap = sizeof(list) * 2;
+	}
+
 	// change int to char
 	char temp[depth];
 
@@ -81,7 +87,9 @@ void printlist(struct charInfo* list, int spot)
 int main(int argc, char** argv)
 {
 	int spot = 0;
-	struct charInfo list[99999];
+	int cap = 1000000;
+	//struct charInfo list[99999];
+	struct charInfo* list = malloc(cap * sizeof(struct charInfo));
 	int byte[5];
 	int depth;
 	int success;
@@ -108,24 +116,24 @@ int main(int argc, char** argv)
 					{
 						byte[4] = getchar();
 						depth++;
-						success = addNew(list, spot, depth, byte);
+						success = addNew(list, spot, depth, byte, &cap);
 					}
 					else {
-						success = addNew(list, spot, depth, byte);
+						success = addNew(list, spot, depth, byte, &cap);
 					}
 				}
 				else {
-				 	success = addNew(list, spot, depth, byte);
+				 	success = addNew(list, spot, depth, byte, &cap);
 				}
 
 			}
 			else {
-				success = addNew(list, spot, depth, byte);			
+				success = addNew(list, spot, depth, byte, &cap);			
 			}
 			
 		}
 		else {
-			success = addNew(list, spot, depth, byte);	
+			success = addNew(list, spot, depth, byte, &cap);	
 		}
 		if(success == -1) 
 		{

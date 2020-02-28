@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
-
+#include <unistd.h> 
 
 typedef struct charInfo {
 	char character[4];
@@ -34,13 +33,8 @@ int addNew(struct charInfo* list, int spot, int depth, int* byte)
 	for(int x = 0; x < depth + 1; ++x) 
 	{
 		temp[x] = byte[x];
-		//printf("byte[%d} = %d, temp[%d] = %s\n", x, byte[x], x, temp);
-		//list[spot].character[x] = temp[x];
 	}
-	// do we already have it?
-	//printf("Temp: %s\n", temp);
-
-	//int copy = iscopy(list, spot, temp);
+	
 	for(int y = 0; y < spot + 2; ++y)
 	{
 		// if y == spot + 1 then there are no dupes
@@ -60,7 +54,6 @@ int addNew(struct charInfo* list, int spot, int depth, int* byte)
 		if(strcmp(list[y].character, temp) == 0)
 		{
 			list[y].count +=1;
-			//printf("================ Plus ONE\n");
 			return 1;
 		}
 	}
@@ -71,20 +64,17 @@ void printlist(struct charInfo* list, int spot)
 {
 	for(int i = 0; i < spot + 1; ++i)
 	{
-		//printf("Spot: %d -> ", spot);
 		if(list[i].count > 0)
 		{
-			dprintf(STDOUT_FILENO,"Spot: %d -> ", spot);
-			dprintf(STDOUT_FILENO,"Char = %s, Count = %d\n",list[i].character,list[i].count);
+			dprintf(STDOUT_FILENO,"%s->%d\n",list[i].character,list[i].count);
 		}
 	}
 }
 
 int main(int argc, char** argv)
 {
-	int limit = 99999;
 	int spot = 0;
-	struct charInfo list[limit];
+	struct charInfo list[999999];
 	int byte[4];
 	int depth;
 	int success;
@@ -122,14 +112,14 @@ int main(int argc, char** argv)
 		else {
 			success = addNew(list, spot, depth, byte);	
 		}
-		printf("success = %d\n", success);
+		if(success == -1) 
+		{
+			printf("success has failed at spot %d\n", spot);
+		}
 		spot++;
 	}
 
-	printlist(list, spot);
-	printf("============================\n");
-//	int length = sizeof(list) / sizeof(list[0]);
-	//trying spot instead of length;
+
 	qsort(list, spot, sizeof(struct charInfo), compare);
 	printlist(list, spot);
 

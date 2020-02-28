@@ -5,7 +5,7 @@
 #include <unistd.h> 
 
 typedef struct charInfo {
-	char character[5];
+	char character[6];
 	int count;
 } charInfo;
 
@@ -28,10 +28,11 @@ int compare(const void* left, const void* right)
 int addNew(struct charInfo* list, int spot, int depth, int* byte)
 {
 	// change int to char
-	char temp[4];
+	char temp[depth];
 
 	for(int x = 0; x < depth + 1; ++x) 
 	{
+		//thsi might need fixed... do we go to depth or depth+1
 		temp[x] = byte[x];
 	}
 	
@@ -48,14 +49,19 @@ int addNew(struct charInfo* list, int spot, int depth, int* byte)
 			{
 				list[spot].character[i] = temp[i];
 			}	
-			list[spot].character[4] = '\0';
+			// trying 5 but might be 6
+			list[spot].character[5] = '\0';
 			return 0;
 		}
 	
-		if(strcmp(list[y].character, temp) == 0)
+		//if(strcmp(list[y].character, temp) == 0)
+		for(int z = 0; z < depth + 1; ++z)
 		{
-			list[y].count +=1;
-			return 1;
+			if(list[y].character[z] == temp[z])
+			{
+				list[y].count +=1;
+				return 1;
+			}
 		}
 	}
 	return -1;
@@ -76,7 +82,7 @@ int main(int argc, char** argv)
 {
 	int spot = 0;
 	struct charInfo list[99999];
-	int byte[4];
+	int byte[5];
 	int depth;
 	int success;
 		
@@ -98,7 +104,15 @@ int main(int argc, char** argv)
 					//pull another
 					byte[3] = getchar();
 					depth++;
-					success = addNew(list, spot, depth, byte);
+					if(byte[0] & (1<<4))
+					{
+						byte[4] = getchar();
+						depth++;
+						success = addNew(list, spot, depth, byte);
+					}
+					else {
+						success = addNew(list, spot, depth, byte);
+					}
 				}
 				else {
 				 	success = addNew(list, spot, depth, byte);

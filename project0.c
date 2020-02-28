@@ -5,7 +5,7 @@
 #include <unistd.h> 
 
 typedef struct charInfo {
-	char character[4];
+	char character[5];
 	int count;
 } charInfo;
 
@@ -28,7 +28,7 @@ int compare(const void* left, const void* right)
 int addNew(struct charInfo* list, int spot, int depth, int* byte)
 {
 	// change int to char
-	char temp[depth];
+	char temp[5];
 
 	for(int x = 0; x < depth + 1; ++x) 
 	{
@@ -74,8 +74,8 @@ void printlist(struct charInfo* list, int spot)
 int main(int argc, char** argv)
 {
 	int spot = 0;
-	struct charInfo list[999999];
-	int byte[4];
+	struct charInfo list[99999];
+	int byte[5];
 	int depth;
 	int success;
 		

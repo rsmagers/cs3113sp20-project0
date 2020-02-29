@@ -81,7 +81,14 @@ void printlist(struct charInfo* list, int spot)
 		//if(list[i].count > 0)
 		//{
 			//printf("Spot: %d\n", i);
-			dprintf(STDOUT_FILENO,"%s->%d\n",list[i].character,list[i].count);
+			if(i == spot)
+			{
+				dprintf(STDOUT_FILENO,"%s->%d",list[i].character,list[i].count);
+			}
+			else 
+			{
+				dprintf(STDOUT_FILENO,"%s->%d\n",list[i].character,list[i].count);
+			}
 		//}
 		//printf("Spot: %d\n", i);
 	}

@@ -75,12 +75,15 @@ int addNew(struct charInfo* list, int spot, int depth, int* byte, int* cap)
 
 void printlist(struct charInfo* list, int spot)
 {
+	// took off +1 from spot
 	for(int i = 0; i < spot + 1; ++i)
 	{
-		if(list[i].count > 0)
-		{
+		//if(list[i].count > 0)
+		//{
+			//printf("Spot: %d\n", i);
 			dprintf(STDOUT_FILENO,"%s->%d\n",list[i].character,list[i].count);
-		}
+		//}
+		//printf("Spot: %d\n", i);
 	}
 }
 
@@ -96,6 +99,7 @@ int main(int argc, char** argv)
 		
 	while((byte[0] = getchar()) != EOF) 
 	{
+		
 		depth = 0;
 		if(byte[0] & (1<<7)) 
 		{
@@ -139,12 +143,23 @@ int main(int argc, char** argv)
 		{
 			printf("success has failed at spot %d\n", spot);
 		}
-		spot++;
+		if(success == 1)
+		{
+			// do nothing
+		}
+		else
+		{
+			spot++;
+		}
 	}
 
+	// ditch last byte
+	//printf("before sort: \n");
+	//printlist(list, spot - 1);
+	//printf("after sort: =================================\n");
 
 	qsort(list, spot, sizeof(struct charInfo), compare);
-	printlist(list, spot);
+	printlist(list, spot - 1);
 
 	return 0;
 }

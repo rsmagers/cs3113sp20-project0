@@ -103,10 +103,9 @@ int main(int argc, char** argv)
 	int byte[5];
 	int depth;
 	int success;
-		
+		// took out = getchar()
 	while((byte[0] = getchar()) != EOF) 
 	{
-		
 		depth = 0;
 		if(byte[0] & (1<<7)) 
 		{
@@ -129,7 +128,8 @@ int main(int argc, char** argv)
 						depth++;
 						success = addNew(list, spot, depth, byte, &cap);
 					}
-					else {
+					else
+				       	{
 						success = addNew(list, spot, depth, byte, &cap);
 					}
 				}
@@ -145,6 +145,7 @@ int main(int argc, char** argv)
 		}
 		else {
 			success = addNew(list, spot, depth, byte, &cap);	
+						
 		}
 		if(success == -1) 
 		{
@@ -158,6 +159,7 @@ int main(int argc, char** argv)
 		{
 			spot++;
 		}
+
 	}
 
 	// ditch last byte
@@ -166,7 +168,7 @@ int main(int argc, char** argv)
 	//printf("after sort: =================================\n");
 
 	qsort(list, spot, sizeof(struct charInfo), compare);
-	printlist(list, spot - 1);
+	printlist(list, spot - 2);
 
 	return 0;
 }
